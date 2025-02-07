@@ -1,0 +1,19 @@
+[project]
+name = "pynomina"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "apscheduler>=3.11.0",
+    "backoff>=2.2.1",
+    "dacite>=1.9.2",
+    "psycopg[binary,pool]>=3.2.4",
+    "requests>=2.32.3",
+    "tqdm>=4.67.1",
+]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.1.0",
+]
