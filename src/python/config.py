@@ -1,6 +1,9 @@
+import logging
 import pathlib
 import tomllib
 from dataclasses import dataclass
+
+from src.python.logger import Logger
 
 
 @dataclass
@@ -32,11 +35,13 @@ class AppConfig:
 
     config_file_path = "config.toml"
     default_resource = "https://datos.hacienda.gov.py/odmh-core/rest/nomina/datos/"
+    log: logging.Logger
 
-    def __init__(self, config_file_path: str) -> None:
+    def __init__(self, log4py: Logger, config_file_path: str) -> None:
+        self.log = log4py.getLogger("AppConfig")
         self.config_file_path = config_file_path
 
-    def read_config(self, cf: pathlib.Path) -> Config:
+    def read_config(self) -> Config:
         config_file = pathlib.Path(self.config_file_path)
         read = tomllib.loads(config_file.read_text())
         read_app = read.get("app", {})
@@ -58,4 +63,5 @@ class AppConfig:
             force_download=read_nomina.get("FORCE_DOWNLOAD", False),
         )
         conf: Config = Config(pg=pgconf, nominas=nomina_conf)
+        self.log.debug(f"read config: {conf}")
         return conf

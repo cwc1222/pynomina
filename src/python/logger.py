@@ -8,6 +8,3 @@ class Logger:
 
     def getLogger(self, class_name: str) -> logging.Logger:
         return logging.getLogger(class_name)
-
-
-log4py = Logger()
